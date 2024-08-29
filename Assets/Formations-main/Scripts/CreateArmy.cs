@@ -1,7 +1,5 @@
 using System.Collections.Generic;
 using System.Linq;
-using Team;
-using Unity.VisualScripting;
 using UnityEngine;
 
 namespace Formations_main.Scripts
@@ -71,7 +69,7 @@ namespace Formations_main.Scripts
 
     private void Kill(int num)
     {
-      for (var i = 0; i < num; i++)
+      for (int i = 0; i < num; i++)
       {
         GameObject unit = _spawnedUnits.Last();
         _spawnedUnits.Remove(unit);
