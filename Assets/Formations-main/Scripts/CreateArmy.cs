@@ -26,12 +26,6 @@ namespace Formations_main.Scripts
 
     private readonly List<GameObject> _spawnedUnits = new();
     private List<Vector3> _points = new();
-    private Transform _parent;
-
-    private void Awake()
-    {
-      _parent = new GameObject("Army").transform;
-    }
 
     private void Update()
     {
@@ -62,7 +56,7 @@ namespace Formations_main.Scripts
     {
       foreach (Vector3 pos in points)
       {
-        GameObject unit = Instantiate(_unitPrefab, transform.position + pos, Quaternion.identity, _parent);
+        GameObject unit = Instantiate(_unitPrefab, transform.position + pos, Quaternion.identity, transform);
         _spawnedUnits.Add(unit);
       }
     }
