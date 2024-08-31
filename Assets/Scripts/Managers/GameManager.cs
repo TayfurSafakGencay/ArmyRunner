@@ -41,8 +41,7 @@ namespace Managers
     
     public void StartGame(int level)
     {
-      GameState = GameState.StartGame;
-      //
+      ChangeGameState(GameState.StartGame);
     }
 
     public void ChangeGameState(GameState gameState)
@@ -75,11 +74,11 @@ namespace Managers
         AsyncOperationHandle<GameObject> asyncOperationHandle = Addressables.InstantiateAsync(managerKeys[i].ToString(), transform.parent);
         await asyncOperationHandle.Task;
         
-        if (asyncOperationHandle.Status == AsyncOperationStatus.Succeeded) Debug.Log($"{managerKeys[i]} successfully loaded.");
-        else Debug.LogError($"{managerKeys[i]} could not loaded!");
+        if (asyncOperationHandle.Status == AsyncOperationStatus.Succeeded) 
+          Debug.Log($"{managerKeys[i]} successfully loaded.");
+        else 
+          Debug.LogError($"{managerKeys[i]} could not loaded!");
       }
-      
-      ChangeGameState(GameState.MainMenu);
     }
 
     private Dictionary<GameState, List<ManagerKey>> managerVos;
@@ -99,7 +98,8 @@ namespace Managers
     SaveManager,
     LevelManager,
     PanelManager,
-    TeamManager,
+    ArmyManager,
+    GunManager,
   }
 
   public enum GameState

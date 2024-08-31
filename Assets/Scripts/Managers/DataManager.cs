@@ -57,6 +57,8 @@ namespace Managers
 
   public enum DataKey
   {
-    ManagerData
+    ManagerData,
+    GunData,
+    PanelData
   }
 }
