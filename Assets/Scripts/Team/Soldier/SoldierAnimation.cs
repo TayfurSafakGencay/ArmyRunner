@@ -1,0 +1,29 @@
+﻿using Managers;
+using UnityEngine;
+
+namespace Team.Soldier
+{
+  [RequireComponent(typeof(Animator))]
+  public class SoldierAnimation : MonoBehaviour
+  {
+    private Animator _animator;
+
+    private void Awake()
+    {
+      _animator = gameObject.GetComponent<Animator>();
+      ArmyManager.Instance.AnimationStateChange += OnAnimationStateChanged;
+    }
+
+    private void OnAnimationStateChanged(AnimationType animationType)
+    {
+      _animator.SetTrigger(animationType.ToString());
+    }
+  }
+  
+  public enum AnimationType
+  {
+    Firing,
+    RunRight,
+    RunLeft
+  }
+}
