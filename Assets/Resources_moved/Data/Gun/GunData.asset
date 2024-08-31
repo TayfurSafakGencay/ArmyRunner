@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 73ed11f9a7f74b208fb84c2bc532b2b3, type: 3}
+  m_Name: GunData
+  m_EditorClassIdentifier: 
+  GunVos:
+  - Key: 0
+    Model: {fileID: 3683433247765116995, guid: b2ddeb8a6347d844ebb4a10c13124447, type: 3}
+    AttachmentPoint: {fileID: 0}
+    Projectile: {fileID: 5381244824111179133, guid: 744449ca50d38f1418292c48708c909d,
+      type: 3}
+    Level: 1
+    AttackDamage: 25
+    AttackSpeed: 0.75
