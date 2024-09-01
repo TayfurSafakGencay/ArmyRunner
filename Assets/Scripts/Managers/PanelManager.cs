@@ -44,6 +44,10 @@ namespace Managers
       {
         panelKey = PanelKey.MainMenuPanel;
       }
+      else if (gameState == GameState.PreparingStart)
+      {
+        panelKey = PanelKey.InGamePanel;
+      }
       else
       {
         RemoveUnnecessaryPanels(gameState);
@@ -73,7 +77,7 @@ namespace Managers
       }
       else
       {
-        Debug.LogWarning("The panel already in the list!");
+        Debug.LogWarning($"{panelKey} already in the list!");
       }
     }
 
@@ -88,6 +92,7 @@ namespace Managers
         if (!panelGameStateList.Contains(gameState))
         {
           Addressables.Release(panelHandle.Value);
+          _panelHandles.Remove(panelHandle.Key);
         }
       }
     }
@@ -95,11 +100,13 @@ namespace Managers
 
   public enum PanelKey
   {
-    MainMenuPanel
+    MainMenuPanel,
+    InGamePanel,
   }
 
   public struct PanelLayer
   {
     public const int MainMenuPanel = 10;
+    public const int InGamePanel = 11;
   }
 }
