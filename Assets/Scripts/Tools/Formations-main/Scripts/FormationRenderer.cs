@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Formations_main.Scripts
+namespace Tools.Formations_main.Scripts
 {
   public class FormationRenderer : MonoBehaviour
   {

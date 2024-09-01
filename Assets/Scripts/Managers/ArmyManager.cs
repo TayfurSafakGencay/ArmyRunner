@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Formations_main.Scripts;
 using Team.Soldier;
+using Tools.Formations_main.Scripts;
 using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
@@ -23,16 +23,19 @@ namespace Managers
 
     private FormationBase _formation;
     
-    public Action<AnimationType> AnimationStateChange;
+    public Action<AnimationKey, bool> AnimationStateChange;
 
-    private async void Awake()
+    private void Awake()
     {
       if (Instance == null) Instance = this;
       else Destroy(Instance);
 
       _formation = GetComponent<FormationBase>();
 
-      await CreateSoldier();
+      for (int i = 0; i < 10; i++)
+      {
+        CreateSoldier();
+      }
     }
 
     private const string _soldierAddressableKey = "Soldier";
@@ -48,6 +51,9 @@ namespace Managers
       {
         Soldier soldier = asyncOperationHandle.Result.GetComponent<Soldier>();
         soldier.SetKey(GenerateUniqueKey());
+
+        soldier.EquipGun(GunManager.Instance.GetGunData(GunKey.MP5));
+        
         AddSoldier(soldier);
       }
       else

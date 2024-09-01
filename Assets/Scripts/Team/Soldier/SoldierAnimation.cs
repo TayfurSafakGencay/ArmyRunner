@@ -11,19 +11,20 @@ namespace Team.Soldier
     private void Awake()
     {
       _animator = gameObject.GetComponent<Animator>();
+      
       ArmyManager.Instance.AnimationStateChange += OnAnimationStateChanged;
     }
 
-    private void OnAnimationStateChanged(AnimationType animationType)
+    private void OnAnimationStateChanged(AnimationKey animationKey, bool value)
     {
-      _animator.SetTrigger(animationType.ToString());
+      _animator.SetBool(animationKey.ToString(), value);
     }
   }
   
-  public enum AnimationType
+  public enum AnimationKey
   {
-    Firing,
-    RunRight,
-    RunLeft
-  }
+    IsRunning,
+    IsRunningLeft,
+    IsRunningRight,
+  } 
 }

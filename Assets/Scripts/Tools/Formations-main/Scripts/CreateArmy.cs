@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-namespace Formations_main.Scripts
+namespace Tools.Formations_main.Scripts
 {
   public class CreateArmy : MonoBehaviour
   {

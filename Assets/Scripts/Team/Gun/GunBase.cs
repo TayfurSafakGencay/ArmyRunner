@@ -23,7 +23,7 @@ namespace Team.Gun
 
     private void Start()
     {
-      _fireTime = GunVo.AttackSpeed;
+      // _fireTime = GunVo.AttackSpeed;
     }
 
     private void Update()
@@ -33,12 +33,12 @@ namespace Team.Gun
 
     private void Fire()
     {
-      _fireTime -= Time.deltaTime;
-
-      if (!(_fireTime <= 0)) return;
-      
-      _fireTime = GunVo.AttackSpeed;
-      FireAnimation();
+      // _fireTime -= Time.deltaTime;
+      //
+      // if (!(_fireTime <= 0)) return;
+      //
+      // _fireTime = GunVo.AttackSpeed;
+      // FireAnimation();
     }
 
     private void FireAnimation()

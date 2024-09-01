@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Formations_main.Scripts
+namespace Tools.Formations_main.Scripts
 {
   public abstract class FormationBase : MonoBehaviour
   {

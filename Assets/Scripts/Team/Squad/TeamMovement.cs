@@ -9,20 +9,20 @@ namespace Team.Squad
     private ArmyManager _armyManager;
 
     private GameState _gameState;
-    
-    private readonly float _moveSpeed = 1000f;  
-    
+
+    public float _moveSpeed = 2;
+
     [SerializeField]
-    private float _xLimit = 5f; 
-    
+    private float _xLimit = 5f;
+
     private Vector2 touchStartPos;
 
     private void Awake()
     {
       GameManager.Instance.OnGameStateChanged += OnGameStateChanged;
-      
+
       OnGameStateChanged(GameManager.Instance.GameState);
-      
+
       _armyManager = ArmyManager.Instance;
     }
 
@@ -33,13 +33,19 @@ namespace Team.Squad
 
     private void Update()
     {
-      if(_gameState != GameState.StartGame)
+      if (_gameState != GameState.StartGame)
         return;
-      
-      // HandleMovement();
+
       if (Input.touchCount > 0)
       {
         Move();
+      }
+      else
+      {
+        if (!_isRunning) return;
+        
+        _armyManager.AnimationStateChange?.Invoke(AnimationKey.IsRunning, false);
+        _isRunning = false;
       }
     }
 
@@ -79,23 +85,34 @@ namespace Team.Squad
       float xPos = (touch.position.x - halfScreen) / halfScreen;
       float finalXPos = Mathf.Clamp(xPos * _xLimit, -_xLimit, _xLimit);
 
-      transform.position = new Vector3(finalXPos, 0, 0);
+      transform.position = Vector3.MoveTowards(transform.position, new Vector3(finalXPos, 0.22f, 0), Time.deltaTime * _moveSpeed);
+      SetAnimation(transform.position.x - finalXPos);
     }
 
+    private bool _isRunning = false;
     private void SetAnimation(float value)
     {
       if (Mathf.Abs(value - 0) <= 0.005f)
       {
-        _armyManager.AnimationStateChange?.Invoke(AnimationType.Firing);
+        _armyManager.AnimationStateChange?.Invoke(AnimationKey.IsRunning, false);
+        _isRunning = false;
       }
-      else switch (value)
+      else
       {
-        case > 0:
-          _armyManager.AnimationStateChange?.Invoke(AnimationType.RunRight);
-          break;
-        case < 0:
-          _armyManager.AnimationStateChange?.Invoke(AnimationType.RunLeft);
-          break;
+        _armyManager.AnimationStateChange?.Invoke(AnimationKey.IsRunning, true);
+        _isRunning = true;
+
+        switch (value)
+        {
+          case > 0:
+            _armyManager.AnimationStateChange?.Invoke(AnimationKey.IsRunningLeft, false);
+            _armyManager.AnimationStateChange?.Invoke(AnimationKey.IsRunningRight, true);
+            break;
+          case < 0:
+            _armyManager.AnimationStateChange?.Invoke(AnimationKey.IsRunningLeft, true);
+            _armyManager.AnimationStateChange?.Invoke(AnimationKey.IsRunningRight, false);
+            break;
+        }
       }
     }
   }

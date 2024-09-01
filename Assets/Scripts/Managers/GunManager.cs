@@ -1,6 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using Team.Soldier;
+using Tools.Gun;
 using UnityEngine;
 
 namespace Managers
@@ -9,14 +8,29 @@ namespace Managers
   {
     public static GunManager Instance;
 
+    private GunData _gunData;
+
     public Transform ProjectileContainer;
 
     private void Awake()
     {
       if (Instance == null) Instance = this;
       else Destroy(Instance);
+
+      InitializePanelData();
     }
-  }
+
+    private async void InitializePanelData()
+    {
+      _gunData = await DataManager.Instance.LoadData<GunData>(DataKey.GunData);
+      _gunData.Init();
+    }
+
+    public GunVo GetGunData(GunKey gunKey)
+    {
+      return _gunData.Guns[gunKey];
+    }
+}
   
   [Serializable]
   public class GunVo
@@ -61,6 +75,14 @@ namespace Managers
 
   public enum GunKey
   {
-    Famas,
+    MP5,
+    FAMAS,
+    AK47,
+    AR,
+    AUG,
+    SHOTGUN_1,
+    SHOTGUN_2,
+    KAR97,
+    AWP,
   }
 }

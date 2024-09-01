@@ -98,8 +98,8 @@ namespace Managers
     SaveManager,
     LevelManager,
     PanelManager,
-    ArmyManager,
     GunManager,
+    ArmyManager,
   }
 
   public enum GameState
