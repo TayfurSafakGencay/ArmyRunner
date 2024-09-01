@@ -41,7 +41,7 @@ namespace Managers
     
     public void StartGame(int level)
     {
-      ChangeGameState(GameState.StartGame);
+      ChangeGameState(GameState.PreparingStart);
     }
 
     public void ChangeGameState(GameState gameState)
@@ -71,13 +71,19 @@ namespace Managers
       
       for (int i = 0; i < managerKeys.Count; i++)
       {
+        if (InstantiatedManagers.Contains(managerKeys[i]))
+          continue;
+        
         AsyncOperationHandle<GameObject> asyncOperationHandle = Addressables.InstantiateAsync(managerKeys[i].ToString(), transform.parent);
         await asyncOperationHandle.Task;
-        
-        if (asyncOperationHandle.Status == AsyncOperationStatus.Succeeded) 
+
+        if (asyncOperationHandle.Status == AsyncOperationStatus.Succeeded)
+        {
+          InstantiatedManagers.Add(managerKeys[i]);
+
           Debug.Log($"{managerKeys[i]} successfully loaded.");
-        else 
-          Debug.LogError($"{managerKeys[i]} could not loaded!");
+        }
+        else Debug.LogError($"{managerKeys[i]} could not loaded!");
       }
     }
 
@@ -107,6 +113,7 @@ namespace Managers
     None,
     LoadAssets,
     MainMenu,
+    PreparingStart,
     StartGame,
   }
 }

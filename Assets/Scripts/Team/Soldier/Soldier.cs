@@ -76,16 +76,11 @@ namespace Team.Soldier
     private const float _acceptableDistance = 0.01f;
     public void MoveToTargetPosition()
     {
-      _armyManager.AnimationStateChange?.Invoke(AnimationKey.IsRunning, true);
-      _armyManager.AnimationStateChange?.Invoke(AnimationKey.IsRunningRight, true);
-
       transform.position = Vector3.MoveTowards(transform.position, _targetPosition, _unitSpeed * Time.deltaTime);
       
       if (Vector3.Distance(transform.position, _targetPosition) < _acceptableDistance)
       {
         _reachedToTarget = true;
-        _armyManager.AnimationStateChange?.Invoke(AnimationKey.IsRunning, false);
-        _armyManager.AnimationStateChange?.Invoke(AnimationKey.IsRunningRight, false);
       }
     }
   }

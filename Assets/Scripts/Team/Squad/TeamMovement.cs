@@ -40,13 +40,6 @@ namespace Team.Squad
       {
         Move();
       }
-      else
-      {
-        if (!_isRunning) return;
-        
-        _armyManager.AnimationStateChange?.Invoke(AnimationKey.IsRunning, false);
-        _isRunning = false;
-      }
     }
 
     private void HandleMovement()
@@ -66,7 +59,6 @@ namespace Team.Squad
           float touchDeltaX = (touchCurrentPos.x - touchStartPos.x) / Screen.width;
 
           float move = touchDeltaX * _moveSpeed * Time.deltaTime;
-          SetAnimation(move);
           Vector3 newPosition = transform.position + new Vector3(move, 0, 0);
 
           newPosition.x = Mathf.Clamp(newPosition.x, -_xLimit, _xLimit);
@@ -86,34 +78,6 @@ namespace Team.Squad
       float finalXPos = Mathf.Clamp(xPos * _xLimit, -_xLimit, _xLimit);
 
       transform.position = Vector3.MoveTowards(transform.position, new Vector3(finalXPos, 0.22f, 0), Time.deltaTime * _moveSpeed);
-      SetAnimation(transform.position.x - finalXPos);
-    }
-
-    private bool _isRunning = false;
-    private void SetAnimation(float value)
-    {
-      if (Mathf.Abs(value - 0) <= 0.005f)
-      {
-        _armyManager.AnimationStateChange?.Invoke(AnimationKey.IsRunning, false);
-        _isRunning = false;
-      }
-      else
-      {
-        _armyManager.AnimationStateChange?.Invoke(AnimationKey.IsRunning, true);
-        _isRunning = true;
-
-        switch (value)
-        {
-          case > 0:
-            _armyManager.AnimationStateChange?.Invoke(AnimationKey.IsRunningLeft, false);
-            _armyManager.AnimationStateChange?.Invoke(AnimationKey.IsRunningRight, true);
-            break;
-          case < 0:
-            _armyManager.AnimationStateChange?.Invoke(AnimationKey.IsRunningLeft, true);
-            _armyManager.AnimationStateChange?.Invoke(AnimationKey.IsRunningRight, false);
-            break;
-        }
-      }
     }
   }
 }

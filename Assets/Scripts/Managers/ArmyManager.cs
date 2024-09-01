@@ -23,8 +23,6 @@ namespace Managers
 
     private FormationBase _formation;
     
-    public Action<AnimationKey, bool> AnimationStateChange;
-
     private void Awake()
     {
       if (Instance == null) Instance = this;
