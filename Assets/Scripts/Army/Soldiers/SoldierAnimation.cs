@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Team.Soldier
+namespace Army.Soldiers
 {
   [RequireComponent(typeof(Animator))]
   public class SoldierAnimation : MonoBehaviour
@@ -68,6 +68,11 @@ namespace Team.Soldier
     {
       _animator.SetFloat(AnimationKey.Side.ToString(), movement);
     }
+
+    public void FireAnimation()
+    {
+      _animator.SetTrigger(AnimationKey.Fire.ToString());
+    }
   }
 
   public enum AnimationState
@@ -80,6 +85,7 @@ namespace Team.Soldier
   public enum AnimationKey
   {
     IsRunning,
-    Side
+    Side,
+    Fire,
   } 
 }

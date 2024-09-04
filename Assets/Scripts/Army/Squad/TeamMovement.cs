@@ -1,8 +1,7 @@
 using Managers;
-using Team.Soldier;
 using UnityEngine;
 
-namespace Team.Squad
+namespace Army.Squad
 {
   public class TeamMovement : MonoBehaviour
   {

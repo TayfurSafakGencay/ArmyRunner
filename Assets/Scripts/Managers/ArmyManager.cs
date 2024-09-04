@@ -1,8 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Team.Soldier;
+using Army.Soldiers;
 using Tools.Formations_main.Scripts;
 using Unity.Mathematics;
 using UnityEngine;
@@ -38,6 +37,8 @@ namespace Managers
 
     private const string _soldierAddressableKey = "Soldier";
 
+    private const GunKey _standardGunKey = GunKey.MP5;
+
     public async Task CreateSoldier()
     {
       AsyncOperationHandle<GameObject> asyncOperationHandle =
@@ -50,7 +51,7 @@ namespace Managers
         Soldier soldier = asyncOperationHandle.Result.GetComponent<Soldier>();
         soldier.SetKey(GenerateUniqueKey());
 
-        soldier.EquipGun(GunManager.Instance.GetGunData(GunKey.MP5));
+        soldier.EquipGun(_standardGunKey, GunManager.Instance.GetGunData(_standardGunKey));
         
         AddSoldier(soldier);
       }

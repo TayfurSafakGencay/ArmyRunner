@@ -1,7 +1,11 @@
-﻿using Managers;
+﻿using System.Data;
+using Army.Gun;
+using Managers;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
+using UnityEngine.ResourceManagement.AsyncOperations;
 
-namespace Team.Soldier
+namespace Army.Soldiers
 {
   public class Soldier : MonoBehaviour
   {
@@ -11,10 +15,11 @@ namespace Team.Soldier
     private Transform _gunContainer;
     public string Key { get; private set; }
 
-    public GunVo CurrentWeapon { get; private set; }
+    private GunData _gunData;
 
     private void Awake()
     {
+      _soldierAnimation = GetComponent<SoldierAnimation>();
       transform.localRotation = new Quaternion(0, 0, 0, 0);
 
       _armyManager = ArmyManager.Instance;
@@ -25,25 +30,32 @@ namespace Team.Soldier
       Key = newKey;
     }
 
-    public void EquipGun(GunVo gun)
+    public void EquipGun(GunKey gunKey, GunData gunData)
     {
-      CurrentWeapon = gun;
+      _gunData = gunData;
       
-      ChangeGun(gun.Model, gun.AttachmentPoint);
+      ChangeGun(gunKey);
     }
 
-    private void ChangeGun(GameObject gunModel, Transform gunTransform)
+    private async void ChangeGun(GunKey gunKey)
     {
+      AsyncOperationHandle<GameObject> asyncOperationHandle = 
+        Addressables.InstantiateAsync(gunKey.ToString(), Vector3.zero, Quaternion.identity, _gunContainer);
+      
       for (int i = 0; i < _gunContainer.childCount; i++)
-      {
         Destroy(_gunContainer.GetChild(i));
+
+      await asyncOperationHandle.Task;
+
+      if (asyncOperationHandle.Status == AsyncOperationStatus.Succeeded)
+      {
+        GameObject gun = asyncOperationHandle.Result;
+        gun.GetComponent<GunBase>().SetStats(_gunData, this, gunKey);
       }
-
-      GameObject gun = Instantiate(gunModel, Vector3.zero, Quaternion.identity, _gunContainer);
-
-      gun.transform.localScale = gunTransform.localScale;
-      gun.transform.localPosition = gunTransform.localPosition;
-      gun.transform.localRotation = gunTransform.localRotation;
+      else
+      {
+        throw new DataException();
+      }
     }
 
     public void Death()
@@ -67,21 +79,27 @@ namespace Team.Soldier
 
     private void FixedUpdate()
     {
-      if (!_reachedToTarget)
-      {
-        MoveToTargetPosition();
-      }
+      MoveToTargetPosition();
     }
 
     private const float _acceptableDistance = 0.01f;
     public void MoveToTargetPosition()
     {
+      if (_reachedToTarget)
+        return;
+      
       transform.position = Vector3.MoveTowards(transform.position, _targetPosition, _unitSpeed * Time.deltaTime);
       
       if (Vector3.Distance(transform.position, _targetPosition) < _acceptableDistance)
       {
         _reachedToTarget = true;
       }
+    }
+
+    private SoldierAnimation _soldierAnimation;
+    public void FireAnimation()
+    {
+      _soldierAnimation.FireAnimation();
     }
   }
 }
