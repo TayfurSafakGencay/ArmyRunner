@@ -1,8 +1,7 @@
 ﻿using System.Collections.Generic;
-using System.Threading.Tasks;
 using Army.Soldiers;
 using Managers;
-using Unity.Mathematics;
+using Tools.Gun;
 using UnityEngine;
 
 namespace Army.Gun
@@ -17,9 +16,8 @@ namespace Army.Gun
     [SerializeField]
     private Transform _gunTransform;
 
-    private GunKey _key;
-    
-    private GunData _data;
+    [SerializeField]
+    private GunData _gunData;
 
     private Soldier _owner;
     
@@ -43,14 +41,6 @@ namespace Army.Gun
       transform.localRotation = _gunTransform.localRotation;
     }
 
-    private async void CreateInitialProjectiles()
-    {
-      for (int i = 0; i < 10; i++)
-      {
-        GameObject projectile = await _gunManager.CreateProjectile(_key, _data.WeaponLevel);
-        ProjectileDataSet(projectile);
-      }
-    }
 
     private bool _firePermission;
     private void OnGameStateChanged(GameState gameState)
@@ -63,16 +53,22 @@ namespace Army.Gun
       return GameManager.Instance.GameState == GameState.StartGame;
     }
 
-    public void SetStats(GunData gunData, Soldier soldier, GunKey gunKey)
+    public void SetStats(Soldier soldier)
     {
-      _data = gunData;
       _owner = soldier;
-      _key = gunKey;
       
-      _fireTime = _data.AttackSpeed;
       _firePermission = CheckGameStateIsStartGame();
 
       CreateInitialProjectiles();
+    }
+
+    private void CreateInitialProjectiles()
+    {
+      for (int i = 0; i < 10; i++)
+      {
+        GameObject projectile = _gunData.InstantiateBullet();
+        ProjectileSetData(projectile);
+      }
     }
 
     private void Update()
@@ -82,23 +78,23 @@ namespace Army.Gun
       Fire();
     }
 
-    private async void Fire()
+    private void Fire()
     {
       _fireTime -= Time.deltaTime;
       
       if (!(_fireTime <= 0)) return;
       
-      _fireTime = _data.AttackSpeed;
+      _fireTime = _gunData.GunStat.FireRate;
 
-      if (_projectiles.Count > _data.ProjectileCount)
+      if (_projectiles.Count > _gunData.GunStat.ProjectileCount)
       {
-        ProjectileDequeue(_data.ProjectileCount);
+        ProjectileDequeue(_gunData.GunStat.ProjectileCount);
       }
       else
       {
-        GameObject projectile = await _gunManager.CreateProjectile(_key, _data.WeaponLevel);
-        ProjectileDataSet(projectile);
-        ProjectileDequeue(_data.ProjectileCount);
+        GameObject projectile  = _gunData.InstantiateBullet();
+        ProjectileSetData(projectile);
+        ProjectileDequeue(_gunData.GunStat.ProjectileCount);
       }
       
       _owner.FireAnimation();
@@ -120,23 +116,33 @@ namespace Army.Gun
       _projectiles.Enqueue(projectile);
 
       projectile.transform.position = _aimPoint.position;
-      // projectile.transform.rotation = quaternion.Euler(90, 0, 0);
-      // projectile.transform.forward = _aimPoint.forward;
     }
 
-    private void ProjectileDataSet(GameObject projectile)
+    private void ProjectileSetData(GameObject projectile)
     {
+      projectile.transform.parent = _gunManager.ProjectileContainer;
+      
       ProjectileVo projectileVo = new()
       {
-        Range = _data.Range,
         GunBase = this,
         AimPoint = _aimPoint,
-        ProjectileSpeed = _data.BulletSpeed
+        Range = _gunData.GunStat.Range,
+        ProjectileSpeed = _gunData.GunStat.BulletSpeed,
+        ProjectileMaterial = _gunData.GetProjectileVisualElements().Item2,
+        TrailRenderer = _gunData.GetProjectileVisualElements().Item1
       };
         
       projectile.GetComponent<Projectile>().SetData(projectileVo);
       projectile.SetActive(false);
       ProjectileEnqueue(projectile);
+    }
+
+    private void OnDestroy()
+    {
+      for (int i = 0; i < _projectiles.Count; i++)
+      {
+        DestroyImmediate(_projectiles.Dequeue());
+      }
     }
   }
 }

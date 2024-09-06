@@ -187,6 +187,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _aimPoint: {fileID: 7293468523828569263}
   _gunTransform: {fileID: 8177109490707614687}
+  _gunData: {fileID: 11400000, guid: c8a189706d31f104ba6c980f5c8dc3cc, type: 2}
 --- !u!4 &3202371739966736832 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 33269b2b610f4c245a712795c1927939,

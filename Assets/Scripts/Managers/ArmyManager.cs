@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Army.Soldiers;
@@ -37,7 +38,7 @@ namespace Managers
 
     private const string _soldierAddressableKey = "Soldier";
 
-    private const GunKey _standardGunKey = GunKey.MP5;
+    private const GunKey _standardGunKey = GunKey.SHOTGUN_1;
 
     public async Task CreateSoldier()
     {
@@ -51,7 +52,11 @@ namespace Managers
         Soldier soldier = asyncOperationHandle.Result.GetComponent<Soldier>();
         soldier.SetKey(GenerateUniqueKey());
 
-        soldier.EquipGun(_standardGunKey, GunManager.Instance.GetGunData(_standardGunKey));
+        Array values = Enum.GetValues(typeof(GunKey));
+        Random random = new ();
+        var x =(GunKey)values.GetValue(random.Next(values.Length));
+
+        soldier.EquipGun(x);
         
         AddSoldier(soldier);
       }

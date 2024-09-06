@@ -41,6 +41,5 @@ namespace Managers
 // Use constants to define resource paths
   public struct JsonKey
   {
-    public const string GunData = "Data/Gun/GunData";
   }
 }

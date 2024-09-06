@@ -15,7 +15,7 @@ namespace Army.Soldiers
     private Transform _gunContainer;
     public string Key { get; private set; }
 
-    private GunData _gunData;
+    private GunStat _gunStat;
 
     private void Awake()
     {
@@ -30,10 +30,8 @@ namespace Army.Soldiers
       Key = newKey;
     }
 
-    public void EquipGun(GunKey gunKey, GunData gunData)
+    public void EquipGun(GunKey gunKey)
     {
-      _gunData = gunData;
-      
       ChangeGun(gunKey);
     }
 
@@ -50,17 +48,12 @@ namespace Army.Soldiers
       if (asyncOperationHandle.Status == AsyncOperationStatus.Succeeded)
       {
         GameObject gun = asyncOperationHandle.Result;
-        gun.GetComponent<GunBase>().SetStats(_gunData, this, gunKey);
+        gun.GetComponent<GunBase>().SetStats(this);
       }
       else
       {
         throw new DataException();
       }
-    }
-
-    public void Death()
-    {
-      ArmyManager.Instance.RemoveSoldier(this);
     }
 
     private bool _reachedToTarget = true;

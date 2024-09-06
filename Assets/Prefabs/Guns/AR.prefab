@@ -193,3 +193,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _aimPoint: {fileID: 4988610711741551480}
   _gunTransform: {fileID: 1055419575385088351}
+  _gunData: {fileID: 11400000, guid: 59966b5d0fa18954591127483af6f27e, type: 2}

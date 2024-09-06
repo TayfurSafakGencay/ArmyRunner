@@ -12,6 +12,12 @@ namespace Army.Gun
 
     private bool _isDataReady;
 
+    [SerializeField]
+    private TrailRenderer _trailRenderer;
+
+    [SerializeField]
+    private MeshRenderer _projectileMeshRenderer;
+
     private void Awake()
     {
       _rb = GetComponent<Rigidbody>();
@@ -63,9 +69,17 @@ namespace Army.Gun
     public void SetData(ProjectileVo projectileVo)
     {
       _projectileVo = projectileVo;
+      SetTrailRenderer(projectileVo.TrailRenderer.colorGradient, projectileVo.TrailRenderer.time);
+      _projectileMeshRenderer.material = projectileVo.ProjectileMaterial;
 
       _execute = true;
       _isDataReady = true;
+    }
+
+    private void SetTrailRenderer(Gradient gradient, float time)
+    {
+      _trailRenderer.colorGradient = gradient;
+      _trailRenderer.time = time;
     }
   }
 
@@ -80,5 +94,9 @@ namespace Army.Gun
     public Transform AimPoint { get; set; }
     
     public float ProjectileSpeed { get; set; }
+    
+    public TrailRenderer TrailRenderer { get; set; }
+    
+    public Material ProjectileMaterial { get; set; }
   }
 }
