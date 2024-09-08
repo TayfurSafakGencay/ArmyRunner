@@ -21,13 +21,9 @@ namespace Managers
   {
     public GunKey GunKey;
     
-    public int AttackDamage;
+    public float AttackDamage;
     
     public float FireRate;
-    
-    public int BulletsInMagazine;
-    
-    public float ReloadTime;
     
     public int ProjectileCount;
     
@@ -35,24 +31,11 @@ namespace Managers
     
     public float BulletSpeed;
     
-    public float Penetrating ;
+    public int Penetrating;
     
     public float CriticalDamage ;
     
     public float CriticalChance ;
-    
-    public float Accuracy ;
-
-    public GunLevel gunLevel;
-  }
-
-  [Serializable]
-  public enum GunLevel
-  {
-    COMMON,
-    RARE,
-    EPIC,
-    LEGENDARY
   }
 
   [Serializable]

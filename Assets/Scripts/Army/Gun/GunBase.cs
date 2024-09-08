@@ -137,6 +137,11 @@ namespace Army.Gun
       ProjectileEnqueue(projectile);
     }
 
+    public GunStat GetGunData()
+    {
+      return _gunData.GunStat;
+    }
+
     private void OnDestroy()
     {
       for (int i = 0; i < _projectiles.Count; i++)

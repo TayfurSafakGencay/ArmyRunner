@@ -1,4 +1,7 @@
-﻿using UnityEngine;
+﻿using Enemies;
+using Managers;
+using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace Army.Gun
 {
@@ -12,6 +15,8 @@ namespace Army.Gun
 
     private bool _isDataReady;
 
+    private GunStat _gunStat;
+    
     [SerializeField]
     private TrailRenderer _trailRenderer;
 
@@ -21,22 +26,24 @@ namespace Army.Gun
     private void Awake()
     {
       _rb = GetComponent<Rigidbody>();
-      
+
       gameObject.SetActive(false);
     }
 
+    private const float _deviation = 0.1f;
     private void OnEnable()
     {
       _projectileVo.StartPosition = transform.position;
       
       gameObject.transform.position = _projectileVo.AimPoint.position;
-      
+
       Vector3 forward = _projectileVo.AimPoint.forward;
       Quaternion world = Quaternion.LookRotation(-forward);
       transform.localRotation = world;
       
       _rb.velocity = forward * _projectileVo.ProjectileSpeed;
 
+      _projectileDuration = _gunStat.Penetrating;
       _execute = true;
     }
 
@@ -69,17 +76,54 @@ namespace Army.Gun
     public void SetData(ProjectileVo projectileVo)
     {
       _projectileVo = projectileVo;
-      SetTrailRenderer(projectileVo.TrailRenderer.colorGradient, projectileVo.TrailRenderer.time);
-      _projectileMeshRenderer.material = projectileVo.ProjectileMaterial;
+      _gunStat = _projectileVo.GunBase.GetGunData();
 
+      SetProjectileVisualElements(projectileVo);
+      
       _execute = true;
       _isDataReady = true;
     }
 
-    private void SetTrailRenderer(Gradient gradient, float time)
+    private void SetProjectileVisualElements(ProjectileVo projectileVo)
     {
-      _trailRenderer.colorGradient = gradient;
-      _trailRenderer.time = time;
+      _trailRenderer.colorGradient = projectileVo.TrailRenderer.colorGradient  ;
+      _trailRenderer.time = projectileVo.TrailRenderer.time;
+      
+      _projectileMeshRenderer.material = projectileVo.ProjectileMaterial;
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+      if (other.gameObject.CompareTag("Enemy"))
+      {
+        CalculateDamage(other.gameObject.GetComponent<Enemy>());
+        CalculateProjectileDuration();
+      }
+    }
+
+    private void CalculateDamage(Enemy enemy)
+    {
+      float damage = _gunStat.AttackDamage;
+      
+      float chance = Random.Range(0f, 1f);
+
+      if (chance <= _gunStat.CriticalChance)
+      {
+        damage *= _gunStat.CriticalDamage;
+      }
+      
+      enemy.TakeDamage(damage);
+    }
+
+    private int _projectileDuration;
+    private void CalculateProjectileDuration()
+    {
+      _projectileDuration--;
+
+      if (_projectileDuration <= 0)
+      {
+        gameObject.SetActive(false);
+      }
     }
   }
 

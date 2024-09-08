@@ -71,6 +71,7 @@ namespace Army.Soldiers
 
     public void FireAnimation()
     {
+      _animator.ResetTrigger(AnimationKey.Fire.ToString());
       _animator.SetTrigger(AnimationKey.Fire.ToString());
     }
   }
