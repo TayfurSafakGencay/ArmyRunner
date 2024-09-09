@@ -106,6 +106,7 @@ namespace Managers
     PanelManager,
     GunManager,
     ArmyManager,
+    ParticleManager,
   }
 
   public enum GameState

@@ -7,10 +7,18 @@ namespace Managers
 {
   public class ParticleManager : MonoBehaviour
   {
+    public static ParticleManager Instance;
+    
     [SerializeField]
     private List<ParticleEffectVo> _particleEffectVos;
     
     private Dictionary<string, Queue<ParticleSystem>> _particleSystemPools = new();
+
+    private void Awake()
+    {
+      if (Instance == null) Instance = this;
+      else Destroy(Instance);
+    }
 
     private void Start()
     {
@@ -71,8 +79,7 @@ namespace Managers
   
   public enum VFX
   {
-    HitObstacle,
-    DestroyObstacle,
     Shooting,
+    HitEnemy
   }
 }

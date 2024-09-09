@@ -20,7 +20,7 @@ namespace Army.Soldiers
     private void Awake()
     {
       _soldierAnimation = GetComponent<SoldierAnimation>();
-      transform.localRotation = new Quaternion(0, 0, 0, 0);
+      transform.localRotation = Quaternion.Euler(0,48.5f,0);
 
       _armyManager = ArmyManager.Instance;
     }
@@ -65,7 +65,6 @@ namespace Army.Soldiers
     public void ChangeTargetPosition(Vector3 pos)
     {
       _targetPosition = pos;
-      _targetPosition.y = 0.22f;
 
       _reachedToTarget = false;
     }

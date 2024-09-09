@@ -27,3 +27,5 @@ MonoBehaviour:
     GameState: 3
   - ManagerKey: 6
     GameState: 3
+  - ManagerKey: 7
+    GameState: 3

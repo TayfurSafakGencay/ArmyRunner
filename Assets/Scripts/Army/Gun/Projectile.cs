@@ -7,6 +7,8 @@ namespace Army.Gun
 {
   public class Projectile : MonoBehaviour
   {
+    private ParticleManager _particleManager;
+    
     private Rigidbody _rb;
 
     private ProjectileVo _projectileVo;
@@ -25,19 +27,19 @@ namespace Army.Gun
 
     private void Awake()
     {
+      _particleManager = ParticleManager.Instance;
       _rb = GetComponent<Rigidbody>();
 
       gameObject.SetActive(false);
     }
 
-    private const float _deviation = 0.1f;
     private void OnEnable()
     {
       _projectileVo.StartPosition = transform.position;
       
       gameObject.transform.position = _projectileVo.AimPoint.position;
 
-      Vector3 forward = _projectileVo.AimPoint.forward;
+      Vector3 forward = new(0,0,1);
       Quaternion world = Quaternion.LookRotation(-forward);
       transform.localRotation = world;
       
@@ -98,6 +100,7 @@ namespace Army.Gun
       {
         CalculateDamage(other.gameObject.GetComponent<Enemy>());
         CalculateProjectileDuration();
+        _particleManager.PlayParticleEffect(transform.position, VFX.HitEnemy);
       }
     }
 

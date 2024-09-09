@@ -9,6 +9,8 @@ namespace Army.Gun
   public class GunBase : MonoBehaviour
   {
     private GunManager _gunManager;
+    
+    private ParticleManager _particleManager;
 
     [SerializeField]
     private Transform _aimPoint;
@@ -24,10 +26,11 @@ namespace Army.Gun
     private float _fireTime;
 
     private Queue<GameObject> _projectiles = new();
-
+    
     private void Awake()
     {
       _gunManager = GunManager.Instance;
+      _particleManager = ParticleManager.Instance;
 
       GameManager.Instance.OnGameStateChanged += OnGameStateChanged;
       
@@ -40,7 +43,6 @@ namespace Army.Gun
       transform.localPosition = _gunTransform.localPosition;
       transform.localRotation = _gunTransform.localRotation;
     }
-
 
     private bool _firePermission;
     private void OnGameStateChanged(GameState gameState)
@@ -96,6 +98,8 @@ namespace Army.Gun
         ProjectileSetData(projectile);
         ProjectileDequeue(_gunData.GunStat.ProjectileCount);
       }
+
+      _particleManager.PlayParticleEffect(_aimPoint.position, VFX.Shooting);
       
       _owner.FireAnimation();
     }
@@ -114,8 +118,6 @@ namespace Army.Gun
     public void ProjectileEnqueue(GameObject projectile)
     {
       _projectiles.Enqueue(projectile);
-
-      projectile.transform.position = _aimPoint.position;
     }
 
     private void ProjectileSetData(GameObject projectile)
