@@ -104,9 +104,10 @@ namespace Managers
     SaveManager,
     LevelManager,
     PanelManager,
+    ParticleManager,
     GunManager,
     ArmyManager,
-    ParticleManager,
+    EnemyManager,
   }
 
   public enum GameState
@@ -116,5 +117,7 @@ namespace Managers
     MainMenu,
     PreparingStart,
     StartGame,
+    LevelCompleted,
+    LevelFailed,
   }
 }

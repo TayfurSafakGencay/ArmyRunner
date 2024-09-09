@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Managers;
+using UnityEngine;
 
 namespace Enemies
 {
@@ -6,27 +7,38 @@ namespace Enemies
   public class Enemy : MonoBehaviour
   {
     [SerializeField]
-    private EnemyData _stat;
+    private EnemyStat _stat;
 
     private EnemyAnimator _enemyAnimator;
+    
+    private EnemyVo Stat => _stat.GetEnemyStat();
 
     private void Awake()
     {
       _enemyAnimator = GetComponent<EnemyAnimator>();
       
       _stat.SetInitialEnemyStat(1);
-      
-      _stat.OnDeath += OnDeath;
     }
 
-    private void OnDeath()
+    private void Death()
     {
       _enemyAnimator.SetAnimationState(EnemyAnimationState.Die);
+
+      gameObject.GetComponent<BoxCollider>().enabled = false;
+      
+      EnemyManager.Instance.OnDeathEnemy(this);
+
+      Destroy(gameObject, 4f);
     }
 
     public void TakeDamage(float damage)
     {
-      _stat.TakeDamage(damage);
+      Stat.Health -= damage;
+
+      if (Stat.Health <= 0)
+      {
+        Death();
+      }
     }
   }
 }

@@ -3,8 +3,8 @@ using UnityEngine;
 
 namespace Enemies
 {
-  [CreateAssetMenu(fileName = "EnemyData", menuName = "Tools/Enemy/Create Enemy Stat", order = 0)]
-  public class EnemyData : ScriptableObject
+  [CreateAssetMenu(fileName = "EnemyStat", menuName = "Tools/Enemy/Create Enemy Stat", order = 0)]
+  public class EnemyStat : ScriptableObject
   {
     [SerializeField]
     private EnemyVo Stat;
@@ -25,26 +25,10 @@ namespace Enemies
     {
       return Stat;
     }
-
-    public void TakeDamage(float damage)
-    {
-      Stat.Health -= damage;
-
-      if (Stat.Health <= 0)
-      {
-        Death();
-      }
-    }
-
-    public Action OnDeath;
-    private void Death()
-    {
-      OnDeath?.Invoke();
-    }
   }
 
   [Serializable]
-  public struct EnemyVo
+  public class EnemyVo
   {
     [HideInInspector]
     public float Health;
