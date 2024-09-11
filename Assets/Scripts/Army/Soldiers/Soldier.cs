@@ -1,4 +1,5 @@
-﻿using System.Data;
+﻿using System;
+using System.Data;
 using Army.Gun;
 using Managers;
 using UnityEngine;
@@ -13,14 +14,19 @@ namespace Army.Soldiers
 
     [SerializeField]
     private Transform _gunContainer;
+
     public string Key { get; private set; }
 
     private GunStat _gunStat;
 
+    private SoldierStat _soldierStat;
+
     private void Awake()
     {
       _soldierAnimation = GetComponent<SoldierAnimation>();
-      transform.localRotation = Quaternion.Euler(0,48.5f,0);
+      transform.localRotation = Quaternion.Euler(0, 48.5f, 0);
+
+      _soldierStat = new SoldierStat(100);
 
       _armyManager = ArmyManager.Instance;
     }
@@ -37,9 +43,9 @@ namespace Army.Soldiers
 
     private async void ChangeGun(GunKey gunKey)
     {
-      AsyncOperationHandle<GameObject> asyncOperationHandle = 
+      AsyncOperationHandle<GameObject> asyncOperationHandle =
         Addressables.InstantiateAsync(gunKey.ToString(), Vector3.zero, Quaternion.identity, _gunContainer);
-      
+
       for (int i = 0; i < _gunContainer.childCount; i++)
         Destroy(_gunContainer.GetChild(i));
 
@@ -61,7 +67,7 @@ namespace Army.Soldiers
     private Vector3 _targetPosition;
 
     private const float _unitSpeed = 2f;
-    
+
     public void ChangeTargetPosition(Vector3 pos)
     {
       _targetPosition = pos;
@@ -71,17 +77,20 @@ namespace Army.Soldiers
 
     private void FixedUpdate()
     {
+      if (_isDead) return;
+
       MoveToTargetPosition();
     }
 
     private const float _acceptableDistance = 0.01f;
+
     public void MoveToTargetPosition()
     {
       if (_reachedToTarget)
         return;
-      
+
       transform.position = Vector3.MoveTowards(transform.position, _targetPosition, _unitSpeed * Time.deltaTime);
-      
+
       if (Vector3.Distance(transform.position, _targetPosition) < _acceptableDistance)
       {
         _reachedToTarget = true;
@@ -89,9 +98,50 @@ namespace Army.Soldiers
     }
 
     private SoldierAnimation _soldierAnimation;
+
     public void FireAnimation()
     {
       _soldierAnimation.FireAnimation();
+    }
+
+    public void TakeDamage(float damage)
+    {
+      _soldierStat.Health -= damage;
+      
+      if (_soldierStat.Health <= 0)
+      {
+        Die();
+      }
+    }
+
+    public Action OnDie;
+
+    private bool _isDead;
+
+    private void Die()
+    {
+      if (_isDead) return;
+      
+      _armyManager.RemoveSoldier(this);
+      
+      _isDead = true;
+      OnDie?.Invoke();
+
+      GetComponent<BoxCollider>().enabled = false;
+      _soldierAnimation.DieAnimation();
+    }
+  }
+
+  public struct SoldierStat
+  {
+    public float MaxHealth;
+
+    public float Health;
+
+    public SoldierStat(float maxHealth)
+    {
+      MaxHealth = maxHealth;
+      Health = maxHealth;
     }
   }
 }

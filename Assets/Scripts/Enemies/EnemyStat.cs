@@ -9,7 +9,7 @@ namespace Enemies
     [SerializeField]
     private EnemyVo Stat;
 
-    public void SetInitialEnemyStat(int level)
+    public EnemyVo GetInitialEnemyStat(int level)
     {
       EnemyVo enemyVo = new()
       {
@@ -18,12 +18,7 @@ namespace Enemies
         Health = Stat.MaxHealth + level * 5
       };
 
-      Stat = enemyVo;
-    }
-
-    public EnemyVo GetEnemyStat()
-    {
-      return Stat;
+      return enemyVo;
     }
   }
 

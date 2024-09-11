@@ -80,6 +80,7 @@ namespace Managers
   public enum VFX
   {
     Shooting,
-    HitEnemy
+    HitZombie,
+    HitSoldier,
   }
 }

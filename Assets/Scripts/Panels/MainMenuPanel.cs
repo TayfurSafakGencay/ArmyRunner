@@ -1,5 +1,4 @@
 ﻿using Managers;
-using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -10,9 +9,6 @@ namespace Panels
     [SerializeField]
     private Button _levelButton;
 
-    [SerializeField]
-    private TextMeshProUGUI _levelButtonText;
-
     public override void Awake()
     {
       base.Awake();
@@ -20,13 +16,6 @@ namespace Panels
       ChangePanelLayer(PanelLayer.MainMenuPanel);
       
       _levelButton.onClick.AddListener(OnStartLevel);
-      
-      Init();
-    }
-
-    private void Init()
-    {
-      _levelButtonText.text = "Level " + LevelManager.Instance.GetLevel();
     }
 
     public void OnStartLevel()

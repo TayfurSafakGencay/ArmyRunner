@@ -16,6 +16,16 @@ namespace Enemies
     {
       _animator.SetTrigger(animationState.ToString());
     }
+    
+    public void ResetAnimationState(EnemyAnimationState animationState)
+    {
+      _animator.ResetTrigger(animationState.ToString());
+    }
+    
+    public float GetCurrentAnimationStateLength()
+    {
+      return _animator.GetCurrentAnimatorStateInfo(0).length;
+    }
   }
   
   public enum EnemyAnimationState

@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: StandardEnemy
   m_EditorClassIdentifier: 
   Stat:
-    Health: 0
-    MaxHealth: 20
-    AttackDamage: 20
+    Health: -205
+    MaxHealth: 40
+    AttackDamage: 25

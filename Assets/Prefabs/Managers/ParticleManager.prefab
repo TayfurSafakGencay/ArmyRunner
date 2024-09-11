@@ -53,3 +53,7 @@ MonoBehaviour:
     ParticleSystem: {fileID: 1429954232896169632, guid: b580af8390fb1214d9d42b51dd995b13,
       type: 3}
     Count: 20
+  - Name: 2
+    ParticleSystem: {fileID: 1429954232896169632, guid: 4629f1534691de74ba00f5b540b50476,
+      type: 3}
+    Count: 5

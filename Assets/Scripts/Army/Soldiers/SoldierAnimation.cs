@@ -74,6 +74,11 @@ namespace Army.Soldiers
       _animator.ResetTrigger(AnimationKey.Fire.ToString());
       _animator.SetTrigger(AnimationKey.Fire.ToString());
     }
+
+    public void DieAnimation()
+    {
+      _animator.SetBool(AnimationKey.IsDie.ToString(), true);
+    }
   }
 
   public enum AnimationState
@@ -88,5 +93,6 @@ namespace Army.Soldiers
     IsRunning,
     Side,
     Fire,
+    IsDie,
   } 
 }

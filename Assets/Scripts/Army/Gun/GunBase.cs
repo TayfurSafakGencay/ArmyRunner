@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Army.Soldiers;
 using Managers;
 using Tools.Gun;
@@ -59,6 +60,7 @@ namespace Army.Gun
     {
       _owner = soldier;
       
+      _owner.OnDie += OnDeathOwner;
       _firePermission = CheckGameStateIsStartGame();
 
       CreateInitialProjectiles();
@@ -75,6 +77,7 @@ namespace Army.Gun
 
     private void Update()
     {
+      if (_isOwnerDead) return;
       if (!_firePermission) return;
       
       Fire();
@@ -150,6 +153,12 @@ namespace Army.Gun
       {
         DestroyImmediate(_projectiles.Dequeue());
       }
+    }
+
+    private bool _isOwnerDead;
+    private void OnDeathOwner()
+    {
+      _isOwnerDead = true;
     }
   }
 }

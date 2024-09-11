@@ -100,7 +100,7 @@ namespace Army.Gun
       {
         CalculateDamage(other.gameObject.GetComponent<Enemy>());
         CalculateProjectileDuration();
-        _particleManager.PlayParticleEffect(transform.position, VFX.HitEnemy);
+        _particleManager.PlayParticleEffect(transform.position, VFX.HitZombie);
       }
     }
 

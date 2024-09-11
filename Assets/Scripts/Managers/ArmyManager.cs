@@ -30,7 +30,7 @@ namespace Managers
 
       _formation = GetComponent<FormationBase>();
 
-      for (int i = 0; i < 10; i++)
+      for (int i = 0; i < 2; i++)
       {
         CreateSoldier();
       }
@@ -38,7 +38,7 @@ namespace Managers
 
     private const string _soldierAddressableKey = "Soldier";
 
-    private const GunKey _standardGunKey = GunKey.SHOTGUN_1;
+    private const GunKey _standardGunKey = GunKey.MP5;
 
     public async Task CreateSoldier()
     {
@@ -52,11 +52,7 @@ namespace Managers
         Soldier soldier = asyncOperationHandle.Result.GetComponent<Soldier>();
         soldier.SetKey(GenerateUniqueKey());
 
-        Array values = Enum.GetValues(typeof(GunKey));
-        Random random = new ();
-        var x =(GunKey)values.GetValue(random.Next(values.Length));
-
-        soldier.EquipGun(x);
+        soldier.EquipGun(_standardGunKey);
         
         AddSoldier(soldier);
       }
@@ -80,12 +76,18 @@ namespace Managers
         _soldiers.Remove(soldier.Key);
         
         SoldierCountChanged();
-        
-        Destroy(soldier.gameObject);
+
+        soldier.transform.parent = transform;
+        Destroy(soldier.gameObject, 4);
+
+        if (_soldiers.Count == 0)
+        {
+          GameManager.Instance.ChangeGameState(GameState.LevelFailed);
+        }
       }
       else
       {
-        Debug.LogWarning("There is no such soldier!");
+        Debug.Log("There is no such soldier!");
       }
     }
 
@@ -101,6 +103,16 @@ namespace Managers
         
         index++;
       }
+    }
+
+    public Transform GetArmyContainer()
+    {
+      return _soldierContainer;
+    }
+    
+    public List<Soldier> GetSoldiers()
+    {
+      return _soldiers.Values.Select(soldier => soldier).ToList();
     }
 
     #region Creating Soldier Key

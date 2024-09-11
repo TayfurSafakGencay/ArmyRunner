@@ -16,4 +16,4 @@ MonoBehaviour:
   - Level: 1
     EnemyCountData:
     - Key: 0
-      Count: 15
+      Count: 1
