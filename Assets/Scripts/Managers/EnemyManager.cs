@@ -83,7 +83,7 @@ namespace Managers
 
       if (_enemies.Count == 0)
       {
-        GameManager.Instance.ChangeGameState(GameState.LevelCompleted);
+        GameManager.Instance.GameFinished(true);
       }
     }
   }

@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Army.Soldiers;
@@ -20,7 +19,7 @@ namespace Managers
     private Transform _soldierContainer;
 
     private readonly Dictionary<string, Soldier> _soldiers = new();
-
+    
     private FormationBase _formation;
     
     private void Awake()
@@ -75,14 +74,14 @@ namespace Managers
       {
         _soldiers.Remove(soldier.Key);
         
-        SoldierCountChanged();
+        // SoldierCountChanged();
 
         soldier.transform.parent = transform;
         Destroy(soldier.gameObject, 4);
 
         if (_soldiers.Count == 0)
         {
-          GameManager.Instance.ChangeGameState(GameState.LevelFailed);
+          GameManager.Instance.GameFinished(false);
         }
       }
       else

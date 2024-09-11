@@ -6,16 +6,13 @@ namespace Panels
   [RequireComponent(typeof(SortingGroup))]
   public abstract class BasePanel : MonoBehaviour
   {
-    private SortingGroup _sortingGroup;
+    protected SortingGroup SortingGroup { get; private set; }
 
     public virtual void Awake()
     {
-      _sortingGroup = gameObject.GetComponent<SortingGroup>();
+      SortingGroup = gameObject.GetComponent<SortingGroup>();
     }
 
-    protected void ChangePanelLayer(int layer)
-    {
-      _sortingGroup.sortingOrder = layer;
-    }
+    protected abstract void ChangePanelLayer(int layer);
   }
 }

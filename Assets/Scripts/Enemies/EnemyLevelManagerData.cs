@@ -15,10 +15,10 @@ namespace Enemies
     private void OnEnable()
     {
       _enemyLevelDataDictionary = new Dictionary<int, EnemyLevelData>();
-      
-      foreach (EnemyLevelData enemyLevelData in _enemyLevelData)
+
+      for (int i = 0; i < _enemyLevelData.Count; i++)
       {
-        _enemyLevelDataDictionary.Add(enemyLevelData.Level, enemyLevelData);
+        _enemyLevelDataDictionary.Add(i + 1, _enemyLevelData[i]);
       }
     }
 
@@ -31,8 +31,6 @@ namespace Enemies
   [Serializable]
   public struct EnemyLevelData
   {
-    public int Level;
-
     public List<EnemyCountData> EnemyCountData;
   }
 

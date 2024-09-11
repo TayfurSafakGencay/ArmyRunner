@@ -17,3 +17,5 @@ MonoBehaviour:
     GameStates: 02000000
   - PanelKey: 1
     GameStates: 0300000004000000
+  - PanelKey: 2
+    GameStates: 0500000006000000

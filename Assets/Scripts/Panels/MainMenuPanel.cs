@@ -18,11 +18,14 @@ namespace Panels
       _levelButton.onClick.AddListener(OnStartLevel);
     }
 
+    protected override void ChangePanelLayer(int layer)
+    {
+      SortingGroup.sortingOrder = layer;
+    }
+
     public void OnStartLevel()
     {
-      int level = LevelManager.Instance.GetLevel();
-
-      GameManager.Instance.StartGame(level);
+      GameManager.Instance.StartGame();
     }
   }
 }

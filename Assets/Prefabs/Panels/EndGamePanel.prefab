@@ -1135,6 +1135,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3791118985713534220}
+  - component: {fileID: 4069778167866885242}
+  - component: {fileID: 9061786298539215741}
   m_Layer: 5
   m_Name: EndGamePanel
   m_TagString: Untagged
@@ -1163,6 +1165,34 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!210 &4069778167866885242
+SortingGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8089800508891335989}
+  m_Enabled: 1
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_SortAtRoot: 0
+--- !u!114 &9061786298539215741
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8089800508891335989}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1b404a69607d42c9a79c5b2c4403fa1c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _winPart: {fileID: 1652016849366931036}
+  _nextLevelButton: {fileID: 8140586438725862698}
+  _losePart: {fileID: 4314715147775406302}
+  _retryButton: {fileID: 3069260285747439190}
 --- !u!1 &8576465088692594334
 GameObject:
   m_ObjectHideFlags: 0

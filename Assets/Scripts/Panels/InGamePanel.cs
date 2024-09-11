@@ -1,5 +1,4 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Managers;
 using TMPro;
 using UnityEngine;
@@ -21,6 +20,10 @@ namespace Panels
     [Header("In Game Part")]
     [SerializeField]
     private GameObject _inGamePanelPart;
+
+    [SerializeField]
+    private TextMeshProUGUI _levelText;
+    
     public override void Awake()
     {
       base.Awake();
@@ -32,6 +35,11 @@ namespace Panels
       _countDown = 3;
       OpenInGamePart(false);
       CountDown();
+    }
+
+    protected override void ChangePanelLayer(int layer)
+    {
+      SortingGroup.sortingOrder = layer;
     }
 
     private void OnGameStateChanged(GameState gameState)
@@ -50,6 +58,8 @@ namespace Panels
 
     private void OpenInGamePart(bool value)
     {
+      _levelText.text = "Level " + LevelManager.Instance.GetLevel();
+      
       _inGamePanelPart.SetActive(value);
       _preparingPart.SetActive(!value);
     }

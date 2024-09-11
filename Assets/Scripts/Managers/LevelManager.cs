@@ -6,16 +6,31 @@ namespace Managers
   {
     public static LevelManager Instance;
 
+    public static int Level;
+
     private void Awake()
     {
       if (Instance == null) Instance = this;
       else Destroy(Instance);
+
+      Level = 1;
     }
 
-    // TODO - Safak: Json'dan yuklenecek.
     public int GetLevel()
     {
-      return 1;
+      return Level;
+    }
+
+    public void NextLevel()
+    {
+      Level++;
+      
+      GameManager.Instance.ChangeGameState(GameState.PreparingStart);
+    }
+    
+    public void RestartLevel()
+    {
+      GameManager.Instance.ChangeGameState(GameState.PreparingStart);
     }
   }
 }

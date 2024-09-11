@@ -127,7 +127,6 @@ namespace Army.Soldiers
       _isDead = true;
       OnDie?.Invoke();
 
-      GetComponent<BoxCollider>().enabled = false;
       _soldierAnimation.DieAnimation();
     }
   }

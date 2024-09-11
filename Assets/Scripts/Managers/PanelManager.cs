@@ -48,6 +48,10 @@ namespace Managers
       {
         panelKey = PanelKey.InGamePanel;
       }
+      else if (gameState == GameState.LevelCompleted || gameState == GameState.LevelFailed)
+      {
+        panelKey = PanelKey.EndGamePanel;
+      }
       else
       {
         RemoveUnnecessaryPanels(gameState);
@@ -102,11 +106,13 @@ namespace Managers
   {
     MainMenuPanel,
     InGamePanel,
+    EndGamePanel,
   }
 
   public struct PanelLayer
   {
-    public const int MainMenuPanel = 10;
+    public const int MainMenuPanel = 13;
     public const int InGamePanel = 11;
+    public const int EndGamePanel = 12;
   }
 }

@@ -39,7 +39,7 @@ namespace Managers
       InitializeManagers();
     }
     
-    public void StartGame(int level)
+    public void StartGame()
     {
       ChangeGameState(GameState.PreparingStart);
     }
@@ -47,6 +47,13 @@ namespace Managers
     public void ChangeGameState(GameState gameState)
     {
       GameState = gameState;
+    }
+
+    public async void GameFinished(bool success)
+    {
+      await Task.Delay(500);
+      
+      ChangeGameState(success ? GameState.LevelCompleted : GameState.LevelFailed);
     }
 
     private async void InitializeManagers()
