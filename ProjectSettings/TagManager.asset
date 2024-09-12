@@ -6,6 +6,7 @@ TagManager:
   tags:
   - PanelCanvas
   - Enemy
+  - End
   layers:
   - Default
   - TransparentFX

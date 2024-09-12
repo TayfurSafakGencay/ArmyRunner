@@ -60,6 +60,24 @@ namespace Managers
         Debug.LogError("Soldier could not created!");
       }
     }
+    
+    public void EquipGunToNextSoldier(GunKey gunKey)
+    {
+      if (_soldiers.Count == 0)
+      {
+        Debug.Log("There is no soldier to equip gun!");
+        return;
+      }
+
+      for (int i = 0; i < _soldiers.Count; i++)
+      {
+        if (_soldiers.ElementAt(i).Value.GetGunKey() == GunKey.MP5)
+        {
+          _soldiers.ElementAt(i).Value.EquipGun(gunKey);
+          return;
+        }
+      }
+    }
 
     private void AddSoldier(Soldier soldier)
     {

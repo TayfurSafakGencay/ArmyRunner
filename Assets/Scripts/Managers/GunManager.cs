@@ -20,6 +20,8 @@ namespace Managers
   public class GunStat
   {
     public GunKey GunKey;
+
+    public int GunValue;
     
     public float AttackDamage;
     

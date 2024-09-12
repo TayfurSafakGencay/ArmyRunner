@@ -1,13 +1,14 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using Army.Soldiers;
+using Interfaces;
 using Managers;
 using UnityEngine;
 
 namespace Enemies
 {
   [RequireComponent(typeof(EnemyAnimator))]
-  public class Enemy : MonoBehaviour
+  public class Enemy : MonoBehaviour, IDamageable
   {
     [SerializeField]
     private EnemyStat _stat;

@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   GunStat:
     GunKey: 1
+    GunValue: 1
     AttackDamage: 45
     FireRate: 0.35
     ProjectileCount: 1

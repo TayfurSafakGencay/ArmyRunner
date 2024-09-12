@@ -41,20 +41,26 @@ namespace Army.Soldiers
       ChangeGun(gunKey);
     }
 
+    public GunKey GetGunKey()
+    {
+      return _gunStat.GunKey;
+    }
+
     private async void ChangeGun(GunKey gunKey)
     {
+      for (int i = 0; i < _gunContainer.childCount; i++)
+        Destroy(_gunContainer.GetChild(i).gameObject);
+      
       AsyncOperationHandle<GameObject> asyncOperationHandle =
         Addressables.InstantiateAsync(gunKey.ToString(), Vector3.zero, Quaternion.identity, _gunContainer);
-
-      for (int i = 0; i < _gunContainer.childCount; i++)
-        Destroy(_gunContainer.GetChild(i));
-
       await asyncOperationHandle.Task;
 
       if (asyncOperationHandle.Status == AsyncOperationStatus.Succeeded)
       {
         GameObject gun = asyncOperationHandle.Result;
-        gun.GetComponent<GunBase>().SetStats(this);
+        GunBase gunBase = gun.GetComponent<GunBase>();
+        gunBase.SetStats(this);
+        _gunStat = gunBase.GetStats();
       }
       else
       {
@@ -107,7 +113,7 @@ namespace Army.Soldiers
     public void TakeDamage(float damage)
     {
       _soldierStat.Health -= damage;
-      
+
       if (_soldierStat.Health <= 0)
       {
         Die();
@@ -121,9 +127,9 @@ namespace Army.Soldiers
     private void Die()
     {
       if (_isDead) return;
-      
+
       _armyManager.RemoveSoldier(this);
-      
+
       _isDead = true;
       OnDie?.Invoke();
 

@@ -66,6 +66,11 @@ namespace Army.Gun
       CreateInitialProjectiles();
     }
 
+    public GunStat GetStats()
+    {
+      return _gunData.GunStat;
+    }
+
     private void CreateInitialProjectiles()
     {
       for (int i = 0; i < 10; i++)

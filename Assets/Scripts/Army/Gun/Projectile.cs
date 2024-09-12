@@ -1,4 +1,5 @@
 ﻿using Enemies;
+using Interfaces;
 using Managers;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -96,15 +97,16 @@ namespace Army.Gun
 
     private void OnTriggerEnter(Collider other)
     {
-      if (other.gameObject.CompareTag("Enemy"))
-      {
-        CalculateDamage(other.gameObject.GetComponent<Enemy>());
-        CalculateProjectileDuration();
-        _particleManager.PlayParticleEffect(transform.position, VFX.HitZombie);
-      }
+      bool hasObjectDamageable = other.TryGetComponent(out IDamageable damageable);
+      
+      if(!hasObjectDamageable) return;
+      
+      CalculateDamage(damageable);
+      CalculateProjectileDuration();
+      _particleManager.PlayParticleEffect(transform.position, VFX.HitZombie);
     }
 
-    private void CalculateDamage(Enemy enemy)
+    private void CalculateDamage(IDamageable damageable)
     {
       float damage = _gunStat.AttackDamage;
       
@@ -115,7 +117,7 @@ namespace Army.Gun
         damage *= _gunStat.CriticalDamage;
       }
       
-      enemy.TakeDamage(damage);
+      damageable.TakeDamage(damage);
     }
 
     private int _projectileDuration;
