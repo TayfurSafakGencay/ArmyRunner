@@ -32,6 +32,8 @@ namespace Enemies
   public struct EnemyLevelData
   {
     public List<EnemyCountData> EnemyCountData;
+
+    public int Wave;
   }
 
   [Serializable]
@@ -40,6 +42,8 @@ namespace Enemies
     public EnemyKey Key;
     
     public int Count;
+    
+    
   }
 
   [Serializable]

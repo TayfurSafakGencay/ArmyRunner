@@ -115,6 +115,7 @@ namespace Managers
     GunManager,
     ArmyManager,
     EnemyManager,
+    RewardManager,
   }
 
   public enum GameState

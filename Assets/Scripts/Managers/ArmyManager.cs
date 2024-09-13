@@ -29,10 +29,7 @@ namespace Managers
 
       _formation = GetComponent<FormationBase>();
 
-      for (int i = 0; i < 2; i++)
-      {
-        CreateSoldier();
-      }
+      CreateSoldier();
     }
 
     private const string _soldierAddressableKey = "Soldier";

@@ -33,7 +33,7 @@ namespace Enemies
 
       _enemyVo = _stat.GetInitialEnemyStat(LevelManager.Instance.GetLevel());
 
-      _target = ArmyManager.Instance.GetArmyContainer();
+      _target = ArmyManager.Instance.transform;
     }
 
     private void Update()

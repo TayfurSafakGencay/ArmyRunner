@@ -1,4 +1,5 @@
 ﻿using System;
+using DG.Tweening;
 using Interfaces;
 using Managers;
 using TMPro;
@@ -16,6 +17,7 @@ namespace Rewards
 
     private void Awake()
     {
+      _rewardVo.Health *= LevelManager.Instance.GetLevel();
       SetHealthText();
     }
 
@@ -27,8 +29,12 @@ namespace Rewards
 
     public void TakeDamage(float damage)
     {
-      // Animation
-
+      transform.DOShakeScale(0.1f, new Vector3(0.05f, 0.05f, 0), 1, 90, true).OnComplete(() =>
+      {
+        // Ensure it returns to original scale after the shake.
+        transform.localScale = Vector3.one;
+      });
+        
       _rewardVo.Health -= damage;
       SetHealthText();
 
@@ -48,8 +54,6 @@ namespace Rewards
 
     private void OpenReward()
     {
-      // Open reward
-
       if (_rewardVo.RewardKey == RewardKey.Soldier)
       {
         for (int i = 0; i < _rewardVo.count; i++)

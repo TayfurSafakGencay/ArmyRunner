@@ -1,8 +1,10 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using Enemies;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
+using Random = UnityEngine.Random;
 
 namespace Managers
 {
@@ -25,22 +27,40 @@ namespace Managers
       
       GameManager.Instance.OnGameStateChanged += OnGameStateChanged;
     }
-    
+
     private void OnGameStateChanged(GameState gameState)
     {
       if (gameState == GameState.StartGame)
       {
         _enemies = new List<Enemy>();
-        SpawnEnemies(LevelManager.Instance.GetLevel());
+        _wave = EnemyLevelManagerData.GetLevelData(LevelManager.Instance.GetLevel()).Wave;
+        CallEnemyWave();
       }
       else
       {
         _enemies.Clear();
       }
     }
+
+    private int _wave;
     
-    public async void SpawnEnemies(int level)
+    private const int _waveTime = 10000;
+
+    private async void CallEnemyWave()
     {
+      if (_wave <= 0) return;
+      
+      SpawnEnemies();
+      _wave--;
+
+      await Task.Delay(_waveTime);
+      
+      CallEnemyWave();
+    }
+    
+    public async void SpawnEnemies()
+    {
+      int level = LevelManager.Instance.GetLevel();
       EnemyLevelData enemyLevelData = EnemyLevelManagerData.GetLevelData(level);
       
       foreach (EnemyCountData enemyCountData in enemyLevelData.EnemyCountData)
@@ -67,9 +87,9 @@ namespace Managers
       }
     }
 
-    private readonly Vector3 _maxPosition = new(4, 0,80);
+    private readonly Vector3 _maxPosition = new(4, 0,60);
     
-    private readonly Vector3 _minPosition = new(-4, 0,40);
+    private readonly Vector3 _minPosition = new(-4, 0,25);
     
     private void SetInitialPositionOfEnemy(GameObject enemy)
     {
@@ -81,10 +101,15 @@ namespace Managers
     {
       _enemies.Remove(enemy);
 
-      if (_enemies.Count == 0)
+      if (_enemies.Count == 0 && _wave == 0)
       {
         GameManager.Instance.GameFinished(true);
       }
+    }
+
+    public int GetWave()
+    {
+      return EnemyLevelManagerData.GetLevelData(LevelManager.Instance.GetLevel()).Wave;
     }
   }
 }

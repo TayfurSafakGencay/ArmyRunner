@@ -21,8 +21,6 @@ namespace Managers
   {
     public GunKey GunKey;
 
-    public int GunValue;
-    
     public float AttackDamage;
     
     public float FireRate;
