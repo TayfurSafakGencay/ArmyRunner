@@ -1191,8 +1191,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _winPart: {fileID: 1652016849366931036}
   _nextLevelButton: {fileID: 8140586438725862698}
+  _winLevelText: {fileID: 2705458965396174159}
   _losePart: {fileID: 4314715147775406302}
   _retryButton: {fileID: 3069260285747439190}
+  _loseLevelText: {fileID: 1273266570522682181}
 --- !u!1 &8576465088692594334
 GameObject:
   m_ObjectHideFlags: 0

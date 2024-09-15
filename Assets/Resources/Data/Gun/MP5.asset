@@ -24,6 +24,7 @@ MonoBehaviour:
     CriticalChance: 0.1
   Projectile: {fileID: 2208144114068143101, guid: c2e7092c24b509344ab3e56b50a2f880,
     type: 3}
+  SoundKey: 6
   _material: {fileID: 2100000, guid: b88ef17039dcd4f489f23348ba916974, type: 2}
   _trailRenderer: {fileID: 993812740984405917, guid: 47527513f92a0334b9a921f09b83b2f3,
     type: 3}

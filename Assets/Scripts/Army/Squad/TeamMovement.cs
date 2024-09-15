@@ -12,7 +12,7 @@ namespace Army.Squad
     public float _moveSpeed = 2;
 
     [SerializeField]
-    private float _xLimit = 4f;
+    private float _xLimit = 5f;
 
     private Vector2 touchStartPos;
 

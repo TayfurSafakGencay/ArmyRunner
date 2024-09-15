@@ -49,7 +49,7 @@ namespace Enemies
       }
       else
       {
-        if (distance <= 1.25f)
+        if (distance <= 1.5f)
         {
           Attack();
         }
@@ -117,12 +117,13 @@ namespace Enemies
 
     private void Death()
     {
-      _enemyAnimator.SetAnimationState(EnemyAnimationState.Die);
-
-      gameObject.GetComponent<BoxCollider>().enabled = false;
+      if (_isDead) return;
       _isDead = true;
+      
+      _enemyAnimator.SetAnimationState(EnemyAnimationState.Die);
+      gameObject.GetComponent<BoxCollider>().enabled = false;
 
-      EnemyManager.Instance.OnDeathEnemy(this);
+      EnemyManager.Instance.OnDeathEnemy();
 
       Destroy(gameObject, 4f);
     }

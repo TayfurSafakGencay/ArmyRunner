@@ -110,6 +110,7 @@ namespace Managers
     TaskManager,
     SaveManager,
     LevelManager,
+    SoundManager,
     PanelManager,
     ParticleManager,
     GunManager,

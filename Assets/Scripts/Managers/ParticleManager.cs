@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using Tools.Sound;
 using UnityEngine;
 
 namespace Managers
@@ -35,6 +36,25 @@ namespace Managers
       
       if (_particleSystemPools[particlePoolName].Count <= 0) return;
       ParticleSystem particleInstance = _particleSystemPools[particlePoolName].Dequeue();
+      particleInstance.transform.position = position;
+      particleInstance.gameObject.SetActive(true);
+      particleInstance.Play();
+
+      StartCoroutine(ReturnParticleToPool(particleInstance, _particleSystemPools[particlePoolName]));
+    }
+
+    public void PlayParticleEffectWithSoundKey(Vector3 position, VFX vfx, SoundKey soundKey)
+    {
+      string particlePoolName = vfx.ToString();
+      
+      if (_particleSystemPools[particlePoolName].Count <= 0) return;
+      ParticleSystem particleInstance = _particleSystemPools[particlePoolName].Dequeue();
+      bool particleSoundComponentCheck = particleInstance.TryGetComponent(out ParticleSoundBehaviour particleSoundBehaviour);
+
+      if (particleSoundComponentCheck)
+      {
+        particleSoundBehaviour.SetSoundKey(soundKey);
+      }
       particleInstance.transform.position = position;
       particleInstance.gameObject.SetActive(true);
       particleInstance.Play();

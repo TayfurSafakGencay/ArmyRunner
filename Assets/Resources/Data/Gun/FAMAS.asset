@@ -14,7 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   GunStat:
     GunKey: 1
-    GunValue: 1
     AttackDamage: 45
     FireRate: 0.35
     ProjectileCount: 1
@@ -25,6 +24,7 @@ MonoBehaviour:
     CriticalChance: 0.15
   Projectile: {fileID: 2208144114068143101, guid: d241a03de3830a145a015cbe8c03b4f8,
     type: 3}
+  SoundKey: 6
   _material: {fileID: 2100000, guid: b88ef17039dcd4f489f23348ba916974, type: 2}
   _trailRenderer: {fileID: 993812740984405917, guid: 47527513f92a0334b9a921f09b83b2f3,
     type: 3}

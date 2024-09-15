@@ -1,4 +1,5 @@
 ﻿using Managers;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -13,12 +14,18 @@ namespace Panels
     [SerializeField]
     private Button _nextLevelButton;
     
+    [SerializeField]
+    private TextMeshProUGUI _winLevelText;
+    
     [Header("Lose Part")]
     [SerializeField]
     private GameObject _losePart;
 
     [SerializeField]
     private Button _retryButton;
+    
+    [SerializeField]
+    private TextMeshProUGUI _loseLevelText;
 
     public override void Awake()
     {
@@ -68,11 +75,15 @@ namespace Panels
     
     private void LevelCompleted()
     {
+      _winLevelText.text= $"Level {LevelManager.Instance.GetLevel()}";
+
       SetPanelPartActive(true);
     }
     
     private void LevelFailed()
     {
+      _loseLevelText.text= $"Level {LevelManager.Instance.GetLevel()}";
+      
       SetPanelPartActive(false);
     }
     

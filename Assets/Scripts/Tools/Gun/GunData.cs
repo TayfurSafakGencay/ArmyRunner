@@ -11,11 +11,14 @@ namespace Tools.Gun
     [Space(20)]
     public GameObject Projectile;
     
+    public SoundKey SoundKey;
+    
     [SerializeField]
     private Material _material;
 
     [SerializeField]
     private TrailRenderer _trailRenderer;
+
 
     [Space(30)]
     [Header("Material")]

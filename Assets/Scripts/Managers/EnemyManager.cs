@@ -18,7 +18,7 @@ namespace Managers
     [SerializeField]
     private EnemyLevelManagerData EnemyLevelManagerData;
 
-    private List<Enemy> _enemies;
+    private int _enemies;
 
     private void Awake()
     {
@@ -32,14 +32,11 @@ namespace Managers
     {
       if (gameState == GameState.StartGame)
       {
-        _enemies = new List<Enemy>();
+        _enemies = 0;
         _wave = EnemyLevelManagerData.GetLevelData(LevelManager.Instance.GetLevel()).Wave;
         CallEnemyWave();
       }
-      else
-      {
-        _enemies.Clear();
-      }
+      else _enemies = 0;
     }
 
     private int _wave;
@@ -75,8 +72,7 @@ namespace Managers
           {
             GameObject enemyObject = asyncOperationHandle.Result;
             enemyObject.transform.parent = _enemyParent;
-            Enemy enemy = enemyObject.GetComponent<Enemy>();
-            _enemies.Add(enemy);
+            _enemies++;
             SetInitialPositionOfEnemy(enemyObject);
           }
           else
@@ -97,11 +93,12 @@ namespace Managers
         _minPosition.y, Random.Range(_minPosition.z, _maxPosition.z));
     }
 
-    public void OnDeathEnemy(Enemy enemy)
+    private int _totalEnemies;
+    public void OnDeathEnemy()
     {
-      _enemies.Remove(enemy);
+      _enemies--;
 
-      if (_enemies.Count == 0 && _wave == 0)
+      if (_enemies == 0 && _wave == 0)
       {
         GameManager.Instance.GameFinished(true);
       }

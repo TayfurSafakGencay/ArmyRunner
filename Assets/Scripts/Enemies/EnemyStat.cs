@@ -14,8 +14,8 @@ namespace Enemies
       EnemyVo enemyVo = new()
       {
         AttackDamage = Stat.AttackDamage + level * 1,
-        MaxHealth = Stat.MaxHealth + level * 5,
-        Health = Stat.MaxHealth + level * 5
+        MaxHealth = Stat.MaxHealth + (level - 1) * 15,
+        Health = Stat.MaxHealth + (level - 1) * 15
       };
 
       return enemyVo;

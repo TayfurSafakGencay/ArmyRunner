@@ -24,7 +24,7 @@ MonoBehaviour:
   - ManagerKey: 4
     GameState: 1
   - ManagerKey: 5
-    GameState: 3
+    GameState: 1
   - ManagerKey: 6
     GameState: 3
   - ManagerKey: 7
@@ -32,4 +32,6 @@ MonoBehaviour:
   - ManagerKey: 8
     GameState: 3
   - ManagerKey: 9
+    GameState: 3
+  - ManagerKey: 10
     GameState: 3

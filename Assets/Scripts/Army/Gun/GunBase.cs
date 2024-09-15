@@ -107,7 +107,7 @@ namespace Army.Gun
         ProjectileDequeue(_gunData.GunStat.ProjectileCount);
       }
 
-      _particleManager.PlayParticleEffect(_aimPoint.position, VFX.Shooting);
+      _particleManager.PlayParticleEffectWithSoundKey(_aimPoint.position, VFX.Shooting, _gunData.SoundKey);
       
       _owner.FireAnimation();
     }

@@ -4913,6 +4913,8 @@ GameObject:
   - component: {fileID: 2504214343621411457}
   - component: {fileID: 4741991464754137355}
   - component: {fileID: -6305301976974919020}
+  - component: {fileID: -952200319421141376}
+  - component: {fileID: -7322587661963581818}
   m_Layer: 0
   m_Name: ShootEffect
   m_TagString: Untagged
@@ -9858,12 +9860,12 @@ AudioSource:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2504214343621411470}
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 1b145bcffd767854fb0c71c37678ebaa, type: 3}
+  m_audioClip: {fileID: 8300000, guid: b3bf04a3ae2a32744b5a7d0da4440e7d, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 0.15
+  m_Volume: 0.1
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -9872,7 +9874,7 @@ AudioSource:
   Priority: 128
   DopplerLevel: 1
   MinDistance: 1
-  MaxDistance: 500
+  MaxDistance: 10
   Pan2D: 0
   rolloffMode: 0
   BypassEffects: 0
@@ -9947,3 +9949,30 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &-952200319421141376
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2504214343621411470}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b98b8b9e25bc4fa2807d8a503a5f1d3f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!166 &-7322587661963581818
+AudioChorusFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2504214343621411470}
+  m_Enabled: 1
+  m_DryMix: 0
+  m_WetMix1: 1
+  m_WetMix2: 0.1
+  m_WetMix3: 0.05
+  m_Delay: 40
+  m_Rate: 0.8
+  m_Depth: 0.03

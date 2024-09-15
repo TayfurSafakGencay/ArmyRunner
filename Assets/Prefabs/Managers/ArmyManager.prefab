@@ -63,7 +63,7 @@ MonoBehaviour:
   Spread: 0.6
   _amount: 1
   _radius: 1.3
-  _radiusGrowthMultiplier: 0.35
+  _radiusGrowthMultiplier: 0.1
   _rotations: 1.25
   _rings: 1
   _ringOffset: 0

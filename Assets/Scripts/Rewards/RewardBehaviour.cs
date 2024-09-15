@@ -52,8 +52,12 @@ namespace Rewards
       }
     }
 
+    private bool _isOpened;
     private void OpenReward()
     {
+      if (_isOpened) return;
+      _isOpened = true;
+      
       if (_rewardVo.RewardKey == RewardKey.Soldier)
       {
         for (int i = 0; i < _rewardVo.count; i++)
